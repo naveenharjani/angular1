@@ -1,0 +1,19 @@
+<app-beehive-page-header [beehivePageName]='gridName' [buttonList]='buttonList' (onButtonClick)='onButtonClick($event)'>
+    <div [formGroup]='filtersForm' class='form-body'>
+        <mat-form-field style='width: 25%; margin-left: 1%;'>
+            <mat-label>Filter</mat-label>
+            <mat-select matNativeControl formControlName='filterTypes' beehiveSelect>
+                <mat-option *ngFor='let obj of gridFilters' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</app-beehive-page-header>
+
+<app-ab-grid [rowData]='rowData' [columnDefs]='columnDefs' [style]='style' [pageSize]='pageSize'
+    [gridOptions]='gridOptions' (getDataSource)='getDataSource($event)'></app-ab-grid>
+
+<div class='spinner' *ngIf='dataLoading'>
+    <mat-spinner [diameter]='50'></mat-spinner>
+</div>
