@@ -1,0 +1,10 @@
+.modal-body-height{
+    overflow-y: auto;
+    height: 500px;
+}
+
+
+.spinner{
+    position: absolute; left: 50%; top: 45%
+  }
+  

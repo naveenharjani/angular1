@@ -1,0 +1,40 @@
+<ng-container #container></ng-container>
+
+<div [formGroup]='industryForm' class="form-body">
+  <div class='row-group' style="margin: 1% 0%;">
+    <mat-label>Industry ID: {{industryID}}</mat-label>
+  </div>
+
+  <div class='row-group'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Industry</mat-label>
+      <textarea matInput placeholder="Industry" formControlName="industry" rows="1"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class='row-group'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Sector</mat-label>
+      <mat-select beehiveSelect formControlName='sector' placeholder='Sector'>
+        <mat-option *ngFor='let obj of sectors' [value]='obj?.Value'>{{obj?.Display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class='row-group'>
+    <mat-radio-group ngDefaultControl formControlName='type'>
+      <mat-label>Type</mat-label>
+      <div class='mat-list-item' *ngFor='let data of types'>
+        <div class='mat-list-item-content'>
+          <mat-radio-button [value]='data?.Value'>{{data?.Display}}
+          </mat-radio-button>
+        </div>
+      </div>
+    </mat-radio-group>
+  </div>
+
+  <div class='row-group'>
+    <mat-label>Last Saved By: {{lastSavedBy}} on {{lastSavedOn}}</mat-label>
+  </div>
+</div>
