@@ -1,0 +1,3 @@
+<a *ngIf='!enableDetail'>{{params?.data?.Downloads}}</a>
+<a *ngIf='enableDetail' style='cursor: pointer;border-bottom: 1px solid blue'
+    (click)="onClick()">{{params?.data?.Downloads}}</a>
