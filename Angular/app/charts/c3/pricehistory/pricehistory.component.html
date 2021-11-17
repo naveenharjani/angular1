@@ -1,0 +1,24 @@
+<div class="row" style="margin-left:5px;">
+  <div class='col-md-7' *ngIf="chart.image != 'yes'" >
+    <button mat-stroked-button (click)="onButtonClick('1m');"
+    [ngStyle]="{'color':is1M==true ? 'darkgreen':'black','font-weight':is1M==true ?'bold':'normal'}">1M</button>
+   
+    <button mat-stroked-button (click)="onButtonClick('3m');"
+      [ngStyle]="{'color':is3M==true ? 'darkgreen':'black','font-weight':is3M==true ?'bold':'normal'}">3M</button>
+    <button mat-stroked-button  (click)="onButtonClick('6m');"
+      [ngStyle]="{'color':is6M==true ? 'darkgreen':'black','font-weight':is6M==true ?'bold':'normal'}">6M</button>
+    <button mat-stroked-button  (click)="onButtonClick('1y');"
+      [ngStyle]="{'color':is1Y==true ? 'darkgreen':'black','font-weight':is1Y==true ?'bold':'normal'}">1Y</button>
+    <button mat-stroked-button  (click)="onButtonClick('2y');"
+      [ngStyle]="{'color':is2Y==true ? 'darkgreen':'black','font-weight':is2Y==true ?'bold':'normal'}">2Y</button>
+    <button mat-stroked-button  (click)="onButtonClick('3y');"
+      [ngStyle]="{'color':is3Y==true ? 'darkgreen':'black','font-weight':is3Y==true ?'bold':'normal'}">3Y</button>
+  </div>
+</div>
+<div class="row" style="margin-left:5px;">
+  <div class='col-md-7' style="width: 800px;">
+    <div id="chart" style="width: 800px;"></div>
+    <br />
+    <a style="float: right;font-size: 10px;">Source: Bernstein - As of {{todaysDate}}</a>
+  </div>
+</div>

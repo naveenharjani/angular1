@@ -1,0 +1,43 @@
+<div>
+  
+  <ng-container #container></ng-container>
+  
+</div>
+  <div class="container" *ngIf="image != 'yes'">
+    <div class="row">
+      <div class="col-md-5">
+     
+        <span> Ticker</span>
+     	
+        <ng-select style="width:400px; padding-right:20px" [items]="tickers" [(ngModel)]="selectedTicker" 
+        placeholder="Select Ticker"
+        bindLabel="Display" (change)="onTypeChange($event)">
+        </ng-select>
+      </div>
+   
+
+    <div class="col-md-4">
+      
+        <span> Type</span>
+     	
+        <ng-select style="width:300px" [(ngModel)]="selectedType" (change)="onTypeChange($event)">
+          <ng-option value="pricechart">3 Year Price Chart</ng-option>
+          <ng-option value="pricehistory">Price History</ng-option>
+          <ng-option value="relativereturn">Relative Return</ng-option>
+          <ng-option value="priceperformance">Performance</ng-option>
+      </ng-select>
+      </div>
+      <div class="col-md-3">
+
+      </div>
+    </div>
+ 
+<br/>
+
+<div class="row">
+  <div >
+    <router-outlet (activate)="onActivate($event)" (deactivate)="componentRemoved($event)"></router-outlet>
+  </div>
+ 
+</div>
+</div>

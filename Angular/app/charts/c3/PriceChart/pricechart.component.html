@@ -1,0 +1,57 @@
+<div class="c3chart">
+  <div class="row" id="CompanyName" style="margin-left: 15px;width:800px;" *ngIf="CompanyName?.length >0">
+    <div class="col-md-12 " class="company" >
+       {{CompanyName}}&nbsp;<span class="currency">({{ CurrencyCode }})</span>
+    </div>
+  </div>
+  <div class="row" class="chartlayout" >
+
+    <div class="col-md-2" *ngIf="CompanyName?.length >0">
+
+      <table class='table' style="font-family:Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif !important;">
+        <thead>
+          <th style="text-align: left;">Date</th>
+          <th style="text-align:left;">Rating </th>
+          <th style="text-align:right;">Target </th>
+        </thead>
+        <tr *ngFor="let trg of jsonTargetPrices">
+          <td style="text-align: left; padding-left: 0;font-family:Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif !important;white-space: nowrap;">{{trg.Date| date: 'dd-MMM-yyyy'}}</td>
+          <td style="text-align:left;font-family:Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif !important;">
+            {{trg.Rating}}
+          </td>
+          <td style="text-align:right;font-family:Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif !important;">{{trg.TargetPrice|number:'.2'}} </td>
+        </tr>
+      </table>
+      <div *ngIf="noCoverage?.length >1" class="nocoverage" >
+        <a >{{noCoverage}}</a><br />
+      </div>
+      <div *ngIf="noCoverage?.length <1" class="nocoverage" >
+       
+        <a class="table-legend">O - Outperform</a><br />
+        <a class="table-legend">M - Market-Perform</a><br />
+        <a class="table-legend">U - Underperform</a><br />
+        <a class="table-legend">N - Not Rated</a><br />
+        <div *ngFor="let trg of uniqueRatingAction">
+          <div *ngIf="trg == 'IC'">
+            <a class="table-legend">IC - Initiated Coverage</a>
+          </div>
+          <div *ngIf="trg == 'DC'">
+            <a class="table-legend">DC - Dropped Coverage</a>
+          </div>
+          <div *ngIf="trg == 'SC'">
+            <a class="table-legend">SC - Suspended Coverage</a>
+          </div>
+          <div *ngIf="trg == 'RC'">
+            <a class="table-legend">RC - Resumed Coverage</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" class="divChart"  >
+
+      <div id="chart" class="chart"></div>
+      <br />
+      <a class="source" *ngIf="CompanyName?.length >0">Source: Bernstein - As of {{todaysDate}}</a><br />
+    </div>
+  </div>
+</div>
