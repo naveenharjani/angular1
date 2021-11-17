@@ -1,0 +1,11 @@
+<app-beehive-page-header [beehivePageName]='gridName' [buttonList]='buttonList' (onButtonClick)='onExportClick($event)'>
+</app-beehive-page-header>
+
+<app-ab-grid [rowData]='facebookData' [columnDefs]='columnDefs' [style]='style' [pageSize]='pageSize'
+  [gridOptions]='gridOptions' (getDataSource)='getDataSource($event)'
+   [frameworkComponents]='frameworkComponents'>
+</app-ab-grid>
+
+<div class="spinner" *ngIf='dataLoading'>
+  <mat-spinner [diameter]='50'></mat-spinner>
+</div>

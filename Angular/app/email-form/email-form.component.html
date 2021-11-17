@@ -1,0 +1,149 @@
+<div #outlookintegration>
+    <table id="outlookintegration" style="display:none; color:red" cellpadding="5" cellspacing="0" width="100%"
+        border="0">
+        <tr>
+            <td><strong>Your current Internet Explorer security settings are blocking access to Microsoft
+                    Outlook</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>To enable the Bernstein Research intranet to integrate with Outlook, a one-time setup is required</td>
+        </tr>
+        <tr>
+            <td>1) Please click <a href="/files/resources/ieactivex.vbs">here</a> to configure. When prompted, select
+                "Open"
+                or "Run".</td>
+        </tr>
+        <tr>
+            <td>2) Once the script completes after a brief flash, you must close and re-start Internet Explorer then
+                re-try.
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div style="padding: 0.5% 0%">
+    <ng-container #container></ng-container>
+</div>
+
+
+<div [formGroup]="distributionGroupForm" style="padding: 0% 1%">
+    <!-- <mat-card>
+            <mat-card-content [style.overflow]="'auto'">
+            <div class="dx-fieldset">
+                <div class="dx-field">
+                    <div class="dx-field-label field-label"><b>Disribution: </b></div>
+                    <div class="dx-field-value field-value">
+                        <mat-form-field style="width: 100%;">
+                            <mat-select formControlName="distributionGroups" [multiple]="true" disableOptionCentering>
+                                <mat-select-trigger>
+                                    <mat-chip-list>
+                                        <mat-chip
+                                            *ngFor="let value of distributionGroupForm?.controls['distributionGroups']?.value"
+                                            selected="true" [selectable]="true" [removable]="true"
+                                            (removed)="removeChip(value, 'distributionGroups')">
+                                            {{value?.Display}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </mat-select-trigger>
+                                <mat-option *ngFor="let obj of distributionList" [value]="obj">{{obj?.Display}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="dx-field">
+                    <div class="dx-field-label field-label"><b>Subject</b></div>
+                    <div class="dx-field-value field-value">
+                        <dx-text-box formControlName='subject'></dx-text-box>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <dx-html-editor valueType='html' *ngIf='emailBody'  [(value)]='emailBody'>
+                    <dxo-toolbar>
+                        <dxi-item formatName="undo"></dxi-item>
+                        <dxi-item formatName="redo"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="size"
+                            [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+                        <dxi-item formatName="font"
+                            [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']">
+                        </dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="bold"></dxi-item>
+                        <dxi-item formatName="italic"></dxi-item>
+                        <dxi-item formatName="strike"></dxi-item>
+                        <dxi-item formatName="underline"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="alignLeft"></dxi-item>
+                        <dxi-item formatName="alignCenter"></dxi-item>
+                        <dxi-item formatName="alignRight"></dxi-item>
+                        <dxi-item formatName="alignJustify"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="orderedList"></dxi-item>
+                        <dxi-item formatName="bulletList"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="color"></dxi-item>
+                        <dxi-item formatName="background"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="link"></dxi-item>
+                        <dxi-item formatName="image"></dxi-item>
+                        <dxi-item formatName="separator"></dxi-item>
+                        <dxi-item formatName="clear"></dxi-item>
+                        <dxi-item formatName="codeBlock"></dxi-item>
+                        <dxi-item formatName="blockquote"></dxi-item>
+                    </dxo-toolbar>
+                </dx-html-editor>
+            </div>
+                
+        </mat-card-content>
+    </mat-card> -->
+    <div>
+        <mat-form-field style="width: 100%;">
+            <mat-label>Disribution</mat-label>
+            <mat-select placeholder="Disribution" formControlName="distributionGroups" [multiple]="true"
+                disableOptionCentering>
+                <mat-select-trigger>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let value of distributionGroupForm?.controls['distributionGroups']?.value"
+                            selected="true" [selectable]="true" [removable]="true"
+                            (removed)="removeChip(value, 'distributionGroups')">
+                            {{value?.Display}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let obj of distributionList" [value]="obj">{{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field style="width: 100%">
+            <mat-label>Subject</mat-label>
+            <textarea matInput placeholder="Subject" formControlName="subject" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+<div style="padding: 0% 1%" *ngIf='showEditor'>
+    <editor apiKey="test" *ngIf='emailBody' [(ngModel)]="emailBody" [init]="{ 
+    plugins: 'link',
+    toolbar1: 
+        'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | 
+        font | forecolor backcolor',
+    statusbar: false,
+    menubar: false,
+    content_style: [
+        '.mce-item-table, .mce-item-table caption, .mce-item-table td, .mce-item-table th{border: 0px ;}'        
+    ],
+    height: 750,
+    branding: false}"></editor>
+</div>
+
+<div *ngIf='!showEditor' [innerHTML]="emailBody"></div>
