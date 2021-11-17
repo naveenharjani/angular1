@@ -1,0 +1,50 @@
+<!-- <div class="navbar navbar-expand-lg" style="background-color: #50BEAF;">
+  <div class="left" style="padding-left:15px; margin-top:15px;">
+    <a href="/"><img [src]="bernsteinLogo"/></a></div> 
+    
+    <div class="right" style="font-size:12px; font-family: Klavika-Regular;"> 
+      <a style="font-size : 12px; text-decoration: underline;cursor: pointer;" (click)='navigateToCart()'> My Cart</a>
+      <span id="cartCount"> {{message}} </span> |&nbsp;     
+        You are logged on as  <a href="../research/preferences.asp" style="font-size : 12px; text-decoration: underline; font-family: Klavika-Regular;">{{loggedInUser}}</a>
+    </div>
+ 
+</div> -->
+<div class="beehiveHeader" style="font-size:12px; font-family: Klavika-Regular;margin-bottom:10px;padding:10px 10px 1px 10px;background-color: #50BEAF;">
+<div class="row"> 
+	<div class="col-4">
+    <!-- <a href="/"><img [src]="bernsteinLogo"/></a> -->
+	</div> 
+	<div class="col-8" style="text-align: right;"> 
+    <a style="font-size : 12px; text-decoration: underline;cursor: pointer;" (click)='navigateToCart()'> My Cart</a>
+    <span id="cartCount"> {{message}} </span> |&nbsp;     
+      You are logged on as  <a href="../research/preferences.asp" style="font-size : 12px; text-decoration: underline; font-family: Klavika-Regular;">{{loggedInUser}}</a>
+	</div>
+</div>
+
+<div class="row"> 
+   
+  <div class="col-7" align-self-center style="background-color:#50BEAF;margin-bottom: 9px;margin-top:9px ;">
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #50BEAF!important;">
+  <span style="float: left;">
+      <button class="navbar-toggler" type="button"
+              (click)="toggleNavbar()">
+              <span>&nbsp;</span>
+        <span class="navbar-toggler-icon"></span>
+        <span>&nbsp;</span>
+      </button>
+    </span>
+      <span style="float: left;"> <a href="/"><img [src]="bernsteinLogo"/></a></span>
+      <div class="collapse navbar-collapse" Style="margin-top: 0.9px;"
+           [ngClass]="{ 'show': navbarOpen }">  
+           <div [innerHtml]="myTemplate"></div>           
+    </div>  
+    </nav>
+	</div> 
+	<div class="col-5 autosearchText" style="padding-top:9px;background-color:#50BEAF; height: 50px;"> 
+   <span style="background-color:#50BEAF; height: 50px; float: right; width: 300px; max-width: 400px;">
+    <typeahead class="toolbar"></typeahead>
+  </span>
+	</div>
+</div>
+</div>

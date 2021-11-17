@@ -1,0 +1,12 @@
+.page-footer {
+    background-color: #50BEAF;
+    /* font-family: Klavika-Regular; */
+    color: #ffffff;
+    text-align: left;
+    height: 80px;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
+    overflow: hidden;
+    font-size: 9pt;
+}

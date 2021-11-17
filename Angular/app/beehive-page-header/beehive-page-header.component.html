@@ -1,0 +1,10 @@
+<div class="page-header" [ngStyle]="isPopUp && {'padding': 'unset'}">
+  <div class="page-name">{{ beehivePageName }}
+  </div>
+  <div class="button-row" *ngIf='buttons?.length>0'>
+    <span *ngFor='let button of buttons'>
+      <span><button mat-stroked-button (click)='onClick($event)'>{{button?.text}}</button></span>
+    </span>
+  </div>
+</div>
+<ng-content></ng-content>
