@@ -1,0 +1,52 @@
+
+.textbox{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    /* font-size: 1rem; */
+    font-weight: 400;
+    line-height: 1.4;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+  }
+
+  ::ng-deep .mat-tooltip  {
+    white-space: pre-line    !important;
+}
+
+
+    
+ .ng-dropdown-panel .ng-dropdown-header  {            
+  padding-left: 2px !important;
+}
+
+.ng-select .ng-select-container {
+  min-height: 30px;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 30px;
+}
+
+ ::ng-deep .ng-option{
+   /* font-size:15px!important; */
+     padding-top:5px !important;
+}  
+
+
+  ::ng-deep .ng-select .ng-select-container {
+    border-radius: 0px!important;
+}
+
+
+
+.multiInput{
+  max-width: 30px!important;
+  width: 30px!important;
+}
+
+
+.ag-theme-material .ag-icon-checkbox-checked {
+  color: #0076c6; }

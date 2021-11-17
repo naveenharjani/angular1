@@ -1,0 +1,104 @@
+<div style="padding-top:15px; max-width: 600px">
+    <app-beehive-page-header [beehivePageName]='pageName' [buttonList]='buttonList' (onButtonClick)='onButtonClick($event)'>
+    </app-beehive-page-header>
+    </div>
+    <div style="padding:15px; max-width: 600px;" >
+    
+      <div style="padding-bottom: 10px;">
+          <div class="dropdownName">
+            <span> Name</span>
+          </div>
+          <div>
+            <input type="text" class="textbox"  [(ngModel)]="selectedName"  placeholder="Name" disabled={{isDisabled}} >       
+         </div>
+      </div>
+    
+      <div style="padding-bottom: 10px;">
+          <div class="dropdownName">
+            <span> Description</span>
+          </div>
+          <div>
+            <textarea class="textbox"  [(ngModel)]="selectedDescription" placeholder="Description"  rows="1" disabled={{isDisabled}} ></textarea>
+         </div>
+      </div>
+      <div style="padding-bottom: 10px;">	
+        <div class="dropdownName">	
+        <span> Types</span>	
+        </div>	
+        <div>	
+        <ng-select [multiple]="true" [items]="allPublications" [(ngModel)]="selectedPublications" placeholder="Select Types" 
+                   bindLabel="Display" virtualScroll="true" clearSearchOnAdd="true" [closeOnSelect]="false" (change)="onChange('Types',$event)">	
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+                <span class="ng-value-label">{{items.length}} item(s) selected</span>             	
+              </div>     	
+          </ng-template>	
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+          <input class="multiInput" id="item-{{index}}" type="checkbox" [disabled]="item.disabled" [ngModel]="item$.selected"/> 	 
+          <span [style.color]="item.Active== '0' ? 'grey' : 'black'">{{item.Display}} </span>	
+          </ng-template>	
+      </ng-select>	
+      </div>	
+      </div>
+    
+      <div style="padding-bottom: 10px;">	
+        <div class="dropdownName">	
+        <span> Industries</span>	
+        </div>	
+        <div>	
+        <ng-select [multiple]="true" [items]="allIndustries" [(ngModel)]="selectedIndustries" placeholder="Select Industries" dropdownPosition="top"
+                   bindLabel="Display" virtualScroll="true" clearSearchOnAdd="true" [closeOnSelect]="false" (change)="onChange('Industries',$event)">	
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+                <span class="ng-value-label">{{items.length}} item(s) selected</span>         	
+              </div>     	
+          </ng-template>	
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+           <input class="multiInput" id="item-{{index}}" type="checkbox" [disabled]="item.disabled" [ngModel]="item$.selected"/> 	 
+           <span [style.color]="item.Active== '0' ? 'grey' : 'black'">{{item.Display}} </span>
+          </ng-template>	
+      </ng-select>	
+      </div>	
+      </div>
+    
+      <div style="padding-bottom: 10px;">	
+        <div class="dropdownName">	
+        <span> Analysts</span>	
+        </div>	
+        <div>	
+        <ng-select [multiple]="true" [items]="allAnalysts" [(ngModel)]="selectedAnalysts" placeholder="Select Analyst" dropdownPosition="top"
+                   bindLabel="Display" virtualScroll="true" clearSearchOnAdd="true" [closeOnSelect]="false" (change)="onChange('Analysts',$event)">	
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+                <span class="ng-value-label">{{items.length}} item(s) selected</span>         	
+              </div>     	
+          </ng-template>	
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+           <input class="multiInput" id="item-{{index}}" type="checkbox" [disabled]="item.disabled" [ngModel]="item$.selected"/> 
+           <span [style.color]="item.Active== '0' ? 'grey' : 'black'">{{item.Display}} </span> 
+          </ng-template>	
+      </ng-select>	
+      </div>	
+      </div>
+    
+      <div style="padding-bottom: 10px;">	
+        <div class="dropdownName">	
+        <span> Tickers</span>	
+        </div>	
+        <div>	
+        <ng-select [multiple]="true" [items]="allTickers" [(ngModel)]="selectedTickers" placeholder="Select Tickers" dropdownPosition="top"
+                   bindLabel="Display" virtualScroll="true" [closeOnSelect]="false" (change)="onChange('Tickers',$event)">	
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+                <span class="ng-value-label">{{items.length}} item(s) selected</span>         	
+              </div>     	
+          </ng-template>	
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+           <input class="multiInput" id="item-{{index}}" type="checkbox" [disabled]="item.disabled" [ngModel]="item$.selected"/>
+           <span [style.color]="item.Active== '0' ? 'grey' : 'black'">{{item.Display}} </span>      
+          </ng-template>	
+      </ng-select>	
+      </div>	
+      </div>
+    
+    </div>

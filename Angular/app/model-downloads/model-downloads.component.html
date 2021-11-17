@@ -1,0 +1,36 @@
+<app-beehive-page-header [beehivePageName]='gridName' [buttonList]='buttonList' (onButtonClick)='onButtonClick($event)'>
+  <div [formGroup]="filtersForm" class="form-body">
+    <mat-form-field style="width: 20%; margin-left: 1%;">
+      <mat-label>Downloads From (mm-dd-yyyy)</mat-label>
+      <input matInput [matDatepicker]="rangeDatePickerFrom" placeholder="From" formControlName="rangeDatePickerFrom"
+        (dateChange)="rangeDatePickerValueChange()">
+      <mat-datepicker-toggle matSuffix [for]="rangeDatePickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #rangeDatePickerFrom></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field style="width: 20%; margin-left: 1%;">
+      <mat-label>To (mm-dd-yyyy)</mat-label>
+      <input matInput [matDatepicker]="rangeDatePickerTo" placeholder="To" formControlName="rangeDatePickerTo"
+        (dateChange)="rangeDatePickerValueChange()">
+      <mat-datepicker-toggle matSuffix [for]="rangeDatePickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #rangeDatePickerTo></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field style="width: 20%;margin-left: 1%;">
+      <mat-label>View</mat-label>
+      <mat-select beehiveSelect disableOptionCentering placeholder="Type" formControlName="Type">
+        <mat-option value='research'> Research </mat-option>
+        <mat-option value='sales'> Sales </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</app-beehive-page-header>
+
+<span *ngIf="!filtersForm?.valid" style="margin: 1%;color: red;">Invalid Range</span>
+
+<app-ab-grid [rowData]='rowData' [columnDefs]='columnDefs' [style]='style' [pageSize]='pageSize'
+  [gridOptions]='gridOptions' (getDataSource)='getDataSource($event)'></app-ab-grid>
+
+<div class="spinner" *ngIf='dataLoading'>
+  <mat-spinner [diameter]='50'></mat-spinner>
+</div>

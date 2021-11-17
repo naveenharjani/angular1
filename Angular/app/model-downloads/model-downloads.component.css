@@ -1,0 +1,8 @@
+.spinner{
+    position: absolute; left: 50%; top: 45%
+  }
+
+  :host ::ng-deep .rightAlign .ag-cell-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
