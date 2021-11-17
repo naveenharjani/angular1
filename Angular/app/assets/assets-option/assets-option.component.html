@@ -1,0 +1,14 @@
+<button style='margin-top:-10px;' mat-icon-button [matMenuTriggerFor]='menu' #menuTrigger='matMenuTrigger'>
+  <mat-icon>more_horiz</mat-icon>
+</button>
+<mat-menu #menu='matMenu' [overlapTrigger]='false'>
+  <ng-template matMenuContent>
+    <span>
+      <button mat-menu-item [disabled]='params?.data?.State === "Expired"' (click)='email()'>Email</button>
+      <button mat-menu-item (click)='uploadAsset()'>{{button}}</button>
+      <button mat-menu-item [disabled]='!AllowExpire' (click)='confirmDialog()'>Expire</button>
+      <button mat-menu-item [disabled]='!AllowResetExpire' (click)='resetExpire()'>Reset Expire</button>
+    </span>
+  </ng-template>
+
+</mat-menu>

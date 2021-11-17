@@ -1,0 +1,237 @@
+<ng-container #container></ng-container>
+<div [formGroup]='securitiesForm' class="form-body">
+    <div class='row-group' style="margin: 0.5% 0%">
+        <mat-label>Security ID: {{ data?.securityID }}</mat-label>
+    </div>
+    <div class='row-group' style="margin: 0.5% 0%">Parent Company</div>
+    <div class='row-group' style="margin: 0.5% 0%">
+        <mat-label>Company ID: {{ companyID }}</mat-label>
+    </div>
+    <div class='row-group'>
+        <mat-form-field style='width: 62%;float: left;'>
+            <mat-label>Company</mat-label>
+            <mat-select beehiveSelect placeholder='Company' formControlName='companies'
+                (selectionChange)="fetchCompanyData()">
+                <mat-option *ngFor='let obj of securitiesFormData?.companies' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field style='width: 62%;float: left;'>
+            <mat-label>Company</mat-label>
+            <textarea matInput placeholder="Company" formControlName="company" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-label>Tickers</mat-label>
+    </div>
+    <div class='row-group' *ngIf='companyID != -1'>
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" style='width: 62%;'>
+            <div class="example-box" *ngFor="let data of companyTickerMappings" cdkDrag>{{data.SecurityId}} -
+                <span (click)='refreshData(data)'
+                    style="cursor: pointer;border-bottom: 1px solid blue;">{{data.Ticker}}</span>
+                <span *ngIf="data.IsPrimary === 'Y'" style="float: right;"> Primary Ticker</span>
+            </div>
+        </div>
+        <!-- <table>
+            <tbody formArrayName='tickerList'>
+                <tr>
+                    <td>
+                        SecurityID
+                    </td>
+                    <td>
+                        Ticker
+                    </td>
+                </tr>
+                <tr *ngFor="let control of securitiesForm.get('tickerList')['controls'];let index=index;"
+                    [formGroupName]='index'>
+                    <td>
+                        <mat-label>{{control.get('securityID').value}}</mat-label>
+                    </td>
+                    <td>
+                        <mat-label>{{control.get('ticker').value}}</mat-label>
+                    </td>
+                    <td>
+                        <mat-form-field style="margin-left: 10%;">
+                            <mat-label>Is Primary</mat-label>
+                            <mat-select beehiveSelect placeholder='IsPrimary' formControlName='isPrimary'
+                                (selectionChange)="primaryDataChange(index)">
+                                <mat-option *ngFor='let obj of isPrimaryData' [value]='obj?.Value'>
+                                    {{obj?.Display}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field style="margin-left: 24%;">
+                            <mat-label>OrdNo</mat-label>
+                            <mat-select beehiveSelect placeholder='OrdNo' formControlName='orderNumber'>
+                                <mat-option *ngFor='let obj of orderNumberData' [value]='obj'>
+                                    {{obj}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+    </div>
+    <div class='row-group' style="margin: 0.5% 0%">Security</div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Ticker Type</mat-label>
+            <mat-select beehiveSelect placeholder='Ticker Type' formControlName='tickerType'>
+                <mat-option [value]='-1'> Select a Ticker Type</mat-option>
+                <mat-option *ngFor='let obj of tickerTypeData' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Company</mat-label>
+            <textarea matInput placeholder="Company" formControlName="companySecurities" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Alias</mat-label>
+            <textarea matInput placeholder="Alias" formControlName="alias" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>BLOOMBERG</mat-label>
+            <textarea matInput placeholder="BLOOMBERG" formControlName="bloomberg" rows="1"></textarea>
+        </mat-form-field>
+        <mat-label style='margin-left: 8%;'>
+            Verify ticker on <a target='_blank' style='cursor: pointer;' href='http://www.bloomberg.com'
+                tabindex='-1'>Bloomberg</a>
+        </mat-label>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>RIC</mat-label>
+            <textarea matInput placeholder="RIC" formControlName="ric" rows="1"></textarea>
+        </mat-form-field>
+        <mat-label style='margin-left: 8%;'>
+            Verify ticker on <a target='_blank' style='cursor: pointer;' href='http://www.reuters.com'
+                tabindex='-1'>Reuters</a>
+        </mat-label>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>CUSIP</mat-label>
+            <textarea matInput placeholder="CUSIP" formControlName="cusip" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>SEDOL</mat-label>
+            <textarea matInput placeholder="SEDOL" formControlName="sedol" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>CINS</mat-label>
+            <textarea matInput placeholder="CINS" formControlName="cins" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>ISIN</mat-label>
+            <textarea matInput placeholder="ISIN" formControlName="isin" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>VALOREN</mat-label>
+            <textarea matInput placeholder="VALOREN" formControlName="valoren" rows="1"></textarea>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Exchange</mat-label>
+            <mat-select beehiveSelect placeholder='Exchange' formControlName='exchange'>
+                <mat-option [value]='-1'> Select an Exchange</mat-option>
+                <mat-option *ngFor='let obj of securitiesFormData?.exchanges' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Currency</mat-label>
+            <mat-select beehiveSelect placeholder='Currency' formControlName='currency'>
+                <mat-option [value]='-1'> Select an Currency</mat-option>
+                <mat-option *ngFor='let obj of securitiesFormData?.currencies' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Benchmark Index</mat-label>
+            <mat-select beehiveSelect placeholder='Benchmark Index' formControlName='benchmarkIndex'>
+                <mat-option [value]='-1'> Select an Index</mat-option>
+                <mat-option *ngFor='let obj of securitiesFormData?.indexes' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Country</mat-label>
+            <mat-select beehiveSelect placeholder='Country' formControlName='country'>
+                <mat-option [value]='-1'> Select a Country</mat-option>
+                <mat-option *ngFor='let obj of securitiesFormData?.countries' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Region</mat-label>
+            <mat-select beehiveSelect placeholder='Region' formControlName='region'>
+                <mat-option [value]='-1'> Select an Region</mat-option>
+                <mat-option *ngFor='let obj of securitiesFormData?.regions' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>GICS Sub-Industry</mat-label>
+            <mat-select beehiveSelect placeholder='GICS Sub-Industry' formControlName='subIndustry'>
+                <mat-option [value]='-1'> Select a GICS Sub-Industry</mat-option>
+                <mat-option *ngFor='let obj of securitiesFormData?.gics' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class='row-group form-body'>
+        <mat-checkbox [labelPosition]='labelPosition' formControlName='active'>Active:</mat-checkbox>
+    </div>
+    <div class='row-group form-body'>
+        <mat-checkbox [labelPosition]='labelPosition' formControlName='mobile'>Mobile:</mat-checkbox>
+    </div>
+    <div class='row-group'>
+        <mat-form-field class='row-group-element'>
+            <mat-label>Type</mat-label>
+            <mat-select beehiveSelect placeholder='Type' formControlName='type'>
+                <mat-option *ngFor='let obj of typeData' [value]='obj?.Value'>
+                    {{obj?.Display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>

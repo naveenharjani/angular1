@@ -1,0 +1,266 @@
+  <div style="padding-top:5px">
+  <app-beehive-page-header [beehivePageName]='gridName' [buttonList]='buttonList' (onButtonClick)='onButtonClick($event)'>
+  </app-beehive-page-header>
+</div>
+
+<div style="padding-left:10px; padding-right:10px" >
+ 
+   
+      <div  class="form-body" style="padding-bottom: 5px;">
+       <div class="row">
+         <div class="col-md-6">
+          <div class="dropdownName">
+            <span> Security ID :</span>  <label class="tab"> {{data?.securityID}}</label>
+          </div>
+         </div>
+         <div class="col-md-6">
+          <div class="dropdownName" style="float:right">
+            <span> Company ID :</span> <label class="tab">{{this.selectedCompany}}</label>
+          </div>
+         </div>
+       </div>
+       
+    
+        <div *ngIf="data?.securityID > 0">	
+            <div class="dropdownName">	
+                <span> Company</span>	
+            </div>	
+            <div>	
+                <ng-select [items]="companies" 
+                          [(ngModel)]="selectedCompany" 
+                          bindLabel="Display" 
+                          bindValue="Value"
+                          virtualScroll="true"
+                          (change)="onChange('Company',$event)" >
+                </ng-select>
+          </div>	
+        </div>
+
+        <div *ngIf="data?.securityID < 0" >	
+            <div class="dropdownName">	
+                <span> Company</span>	
+            </div>	
+            <div>	
+                <input type="text"  size="100" class="textbox" [(ngModel)]='selectedCompanyName'>
+            </div>	
+        </div>
+
+        <div >	
+            <div class="dropdownName">	
+                <span> Tickers</span>	
+            </div>	
+            <div  >
+                  <app-ab-grid #agGrid [rowData]='securityData' [columnDefs]='columnDefs' [style]='style' [gridOptions]='gridOptions'>
+                  </app-ab-grid>
+            </div>
+        </div>
+    
+      <div>	
+        <div class="dropdownName">	
+            <span> Ticker Type</span>	
+        </div>	
+        <div>	
+            <ng-select [items]="tickerTypeData" 
+                      placeholder="Select Ticker Type" 
+                      [(ngModel)]="selectedTickerType" 
+                      bindLabel="Display" 
+                      bindValue="Value"
+                      virtualScroll="true"
+                      (change)="onChange('TickerType',$event)" >
+            </ng-select>
+      </div>	
+    </div>
+    <!-- <div >	
+      <div class="dropdownName">	
+          <span> Company</span>	
+      </div>	
+      <div>	
+          <input type="text"  size="100" class="textbox" [(ngModel)]='selectedCompanyName'  >
+      </div>	
+  </div> -->
+  <div >	
+    <div class="dropdownName">	
+        <span> Alias</span>	
+    </div>	
+    <div>	
+        <input type="text"  size="100" class="textbox" [(ngModel)]='selectedAlias'   >
+    </div>	
+</div>
+<div >	
+  <div class="dropdownName">	
+      <span> Bloomberg</span>	
+  </div>	
+  <div>	
+      <input type="text"  size="100" class="textbox" [(ngModel)]='selectedBloomberg' [disabled]="isDisabled?true:null"  >
+  </div>	
+</div>
+<div >	
+  <div class="dropdownName">	
+      <span> RIC</span>	
+  </div>	
+  <div>	
+      <input type="text"  size="100" class="textbox" [(ngModel)]='selectedRIC' disabled  >
+  </div>	
+</div>
+<div >	
+  <div class="dropdownName">	
+      <span> CUSIP</span>	
+  </div>	
+  <div>	
+      <input type="text"  size="100" class="textbox" [(ngModel)]='selectedCusip' disabled >
+  </div>	
+</div>
+<div >	
+  <div class="dropdownName">	
+      <span> CINS</span>	
+  </div>	
+  <div>	
+      <input type="text"  size="100" class="textbox" [(ngModel)]='selectedCINS' disabled  >
+  </div>	
+</div>
+<div >	
+  <div class="dropdownName">	
+      <span> ISIN</span>	
+  </div>	
+  <div>	
+      <input type="text"  size="100" class="textbox" [(ngModel)]='selectedISIN' disabled >
+  </div>	
+</div>
+
+<div >	
+  <div class="dropdownName">	
+      <span> VALOREN</span>	
+  </div>	
+  <div>	
+      <input type="text"  size="100" class="textbox" [(ngModel)]='selectedValoren' disabled >
+  </div>	
+</div>
+
+
+<div>	
+  <div class="dropdownName">	
+      <span> Exchange</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="exchanges" 
+                placeholder="Select Exchange" 
+                [(ngModel)]="selectedExchange" 
+                bindLabel="Display" 
+                bindValue="Value"
+                virtualScroll="true"
+                (change)="onChange('Exchange',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+<div>	
+  <div class="dropdownName">	
+      <span> Currency</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="currencies" 
+                placeholder="Select Currency" 
+                [(ngModel)]="selectedCurrency" 
+                bindLabel="Display" 
+                bindValue="Value"
+                virtualScroll="true"
+                (change)="onChange('Currency',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+<div>	
+  <div class="dropdownName">	
+      <span> Benchmark Index</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="indexes" 
+                placeholder="Select Benchmark Index" 
+                [(ngModel)]="selectedBenchmarkIndex" 
+                bindLabel="Display" 
+                bindValue="Value"
+                virtualScroll="true"
+                (change)="onChange('BenchmarkIndex',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+<div>	
+  <div class="dropdownName">	
+      <span> Country</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="countries" 
+                placeholder="Select Country" 
+                [(ngModel)]="selectedCountry" 
+                bindLabel="Display" 
+                bindValue="Value"
+                virtualScroll="true"
+                (change)="onChange('Country',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+
+<div>	
+  <div class="dropdownName">	
+      <span> Region</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="regions" 
+                placeholder="Select region" 
+                [(ngModel)]="selectedRegion" 
+                bindLabel="Display" 
+                bindValue="Value"
+                virtualScroll="true"
+                (change)="onChange('Region',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+<div>	
+  <div class="dropdownName">	
+      <span> GICS Sub-Industry</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="gics" 
+                placeholder="Select GICS Sub-Industry" 
+                [(ngModel)]="selectedSubIndustry" 
+                bindLabel="Display" 
+                bindValue="Value"
+                virtualScroll="true"
+                (change)="onChange('SubIndustry',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+
+<div>	
+  <div class="dropdownName">	
+      <span> Type</span>	
+  </div>	
+  <div>	
+      <ng-select [items]="type" 
+                placeholder="Select Type" 
+                [(ngModel)]="selectedType" 
+                bindLabel="Display" 
+                bindValue="Value"
+                (change)="onChange('Type',$event)" >
+      </ng-select>
+  </div>	
+</div>
+
+        <div class="row" style="padding-top:15px; margin-left:100px">
+          <div class="col-md-6">
+            <input type="checkbox" [(ngModel)]="selectedActive"  (change)="onChange('Active',$event)" /> Active
+          </div>
+          <div class="col-md-6">
+            <input type="checkbox" [(ngModel)]="selectedMobile"  (change)="onChange('Mobile',$event)" /> Mobile
+          </div>
+        </div>
+      </div>
+   
+      
+</div>
+
+

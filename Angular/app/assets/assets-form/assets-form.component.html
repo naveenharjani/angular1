@@ -1,0 +1,169 @@
+<app-beehive-page-header [beehivePageName]='pageName' [buttonList]='buttonList' (onButtonClick)='onButtonClick($event)'>
+</app-beehive-page-header>
+
+<div [formGroup]='assetsForm' class="form-body">
+  <div class='row-group'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Owner</mat-label>
+      <mat-select beehiveSelect placeholder='Owner' formControlName='owner'>
+        <mat-option *ngFor='let obj of ownerList' [value]='obj?.Value'>
+          {{obj?.Display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class='row-group'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Type</mat-label>
+      <mat-select beehiveSelect placeholder='Type' formControlName='type' (selectionChange)='checkAssetType()'>
+        <mat-option *ngFor='let obj of types' [value]='obj?.Value'>
+          {{obj?.Display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class='row-group'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Title</mat-label>
+      <textarea matInput placeholder="Title" formControlName="title" rows="1"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class='row-groups' *ngIf='!showBrightCove'>
+    <mat-form-field floatPlaceholder="never" class='row-group-element'>
+      <input id="my-file" [hidden]="true" #file type='file' (change)="onSelectFile(file.files)" [accept]="fileTypeOnly">
+      <input type="text" readonly matInput formControlName="FileUpload" placeholder="Select file...">
+      <button *ngIf="filename" (click)="clearFile()" matSuffix matTooltip="Remove selected file"
+        [matTooltipPosition]="'above'" type="button" color="warn" mat-icon-button style="display: inline-block;">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button (click)="file.click();" matTooltip="Select a file"
+        [matTooltipPosition]="'above'" style="display: inline-block;">
+        <mat-icon>file_upload</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class='row-group' *ngIf='showBrightCove'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Brightcove</mat-label>
+      <textarea matInput placeholder="Brightcove" formControlName="brightcove" rows="2" (paste)="setExpiryDate()"
+        (change)='setExpiryDate()'></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="row-group">
+    <mat-form-field class='row-group-element'>
+      <mat-label>Expiry (mm-dd-yyyy)</mat-label>
+      <input matInput [matDatepicker]="ExpiryDate" placeholder="From" formControlName="ExpiryDate" [min]="minDate"
+        (dateChange)="rangeDatePickerValueChange()">
+      <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
+      <mat-datepicker #ExpiryDate></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="page-name" style="margin: 2% 0%;">
+    BR.com Landing Page Selection (Optional)
+  </div>
+
+  <div class='row-groups' *ngIf='ableToEdit'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Analysts</mat-label>
+      <mat-select placeholder="Analysts" formControlName="Analysts" [multiple]="true">
+        <app-mat-select-search formControlName="searchAnalysts" [previousSelectedValues]='selectedAnalysts'>
+        </app-mat-select-search>
+        <mat-select-trigger>
+          <mat-chip-list>
+            <mat-chip *ngFor="let value of assetsForm?.controls['Analysts']?.value" selected="true" [selectable]="true"
+              [removable]="true" (removed)="removeChip(value, 'Analysts')">
+              {{value?.Display}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-select-trigger>
+        <mat-option *ngFor="let obj of filteredAnalysts | async" [value]="obj">{{obj?.Display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class='row-groups' *ngIf='ableToEdit'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Industries</mat-label>
+      <mat-select placeholder="Industries" formControlName="Industries" [multiple]="true">
+        <app-mat-select-search formControlName="searchIndustries" [previousSelectedValues]='selectedIndustries'>
+        </app-mat-select-search>
+        <mat-select-trigger>
+          <mat-chip-list>
+            <mat-chip *ngFor="let value of assetsForm?.controls['Industries']?.value" selected="true"
+              [selectable]="true" [removable]="true" (removed)="removeChip(value, 'Industries')">
+              {{value?.Display}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-select-trigger>
+        <mat-option *ngFor="let obj of filteredIndustries | async" [value]="obj">{{obj?.Display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class='row-groups' *ngIf='ableToEdit'>
+    <mat-form-field class='row-group-element'>
+      <mat-label>Tickers</mat-label>
+      <mat-select placeholder="Tickers" formControlName="Tickers" [multiple]="true">
+        <app-mat-select-search formControlName="searchTickers" [previousSelectedValues]='selectedTickers'>
+        </app-mat-select-search>
+        <mat-select-trigger>
+          <mat-chip-list>
+            <mat-chip *ngFor="let value of assetsForm?.controls['Tickers']?.value" selected="true" [selectable]="true"
+              [removable]="true" (removed)="removeChip(value, 'Tickers')">
+              {{value?.Display}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-select-trigger>
+        <mat-option *ngFor="let obj of filteredTickers | async" [value]="obj">{{obj?.Display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class='row-groups' *ngIf='!ableToEdit' style="margin-top: 2%;">
+    <div class='row-group-element' *ngIf='assetsForm?.controls["Analysts"]?.value?.length>0'>
+      <mat-chip-list>
+        <mat-chip *ngFor="let value of assetsForm?.controls['Analysts']?.value">
+          {{value?.Display}}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+  <div class='row-groups' *ngIf='!ableToEdit' style="margin-top: 2%;">
+    <div class='row-group-element' *ngIf='assetsForm?.controls["Industries"]?.value?.length>0'>
+      <mat-chip-list>
+        <mat-chip *ngFor="let value of assetsForm?.controls['Industries']?.value">
+          {{value?.Display}}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+
+  <div class='row-groups' *ngIf='!ableToEdit' style="margin-top: 2%;">
+    <div class='row-group-element' *ngIf='assetsForm?.controls["Tickers"]?.value?.length>0'>
+      <mat-chip-list>
+        <mat-chip *ngFor="let value of assetsForm?.controls['Tickers']?.value">
+          {{value?.Display}}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf='dataLoading'>
+  <mat-spinner class="spinner-circle" [diameter]='50'></mat-spinner>
+</div>

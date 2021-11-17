@@ -1,0 +1,7 @@
+.myCustomModalClass .modal-dialog {
+    max-width: 565px;
+}
+
+.spinner{
+  position: absolute; left: 50%; top: 45%
+}

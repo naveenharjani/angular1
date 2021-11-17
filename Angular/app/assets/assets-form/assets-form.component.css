@@ -1,0 +1,23 @@
+.row-group {
+    display: flex;
+    align-items: center;
+}
+
+.row-group-element {
+    width: 62% !important;
+}
+
+
+.page-name {
+    float: left;
+    color: #495057;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-family: Klavika-Regular;
+    width: 100%;
+}
+
+.spinner-circle{
+    position: absolute;     
+    left: 50%; top: 45%;
+}
