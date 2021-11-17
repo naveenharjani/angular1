@@ -1,0 +1,27 @@
+.tooltip-button {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    text-decoration: underline !important;
+  }
+
+@-moz-document url-prefix() {
+  .width-adjust{
+    width: 200%;
+  }
+}
+
+
+/* This is for IE Browser  */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {    
+  .width-adjust{
+    width: 200%;
+  }
+} 
+
+/* This is for IE Edge Browser */
+@supports (-ms-ime-align:auto) {
+  .width-adjust{
+    width: 200%;
+  }
+}

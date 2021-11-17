@@ -1,0 +1,59 @@
+
+.autocomplete-option{
+    /* font-size:12px; 
+    height:25%; */
+    /* height: 50px;
+    line-height: 20px; */
+    line-height:1.8;
+    height: auto;
+}
+.quickSearchMat{
+    font-family: Klavika-Regular !important;
+    color:black;
+}
+
+.typeahead{
+    width:100%; line-height: 1.5;
+}
+/* .extended-form :focus{
+     width:450px;
+    
+} */
+
+/*Autocomplete input class*/
+.autocomplete-box {
+    width: 100% !important;
+}
+
+/*Autocomplete dropdown class*/
+.single-autocomplete {
+    max-height: 800px !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mat-form-field {
+    font-size: 14px !important;
+    font-family: Klavika-Regular !important;
+}
+/* Reduce the textbox height */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+top: 0.70em!important;
+}
+
+ ::ng-deep  .typeahead .mat-form-field-appearance-outline .mat-form-field-infix{
+    padding: 0.3em 0 0.9em !important;
+}
+
+/* 
+::ng-deep .mat-input-element .mat-form-field-autofill-control .ng-tns-c1-2 .cdk-text-field-autofill-monitored .ng-pristine ng-valid ng-touched
+{
+    height:30px!important
+} */
+
+ ::ng-deep  .autocomplete-box.transition .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-outline.ng-tns-c2-3.ng-star-inserted
+{
+    border-radius: 0px!important;
+    color:#fff!important;
+    height: 30px!important;
+}

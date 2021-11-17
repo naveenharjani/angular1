@@ -1,0 +1,110 @@
+<mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverCloseOnClick]="false" mdePopoverPositionY="above" mdePopoverPoxitionX='before'>
+    <mat-card *ngIf="tooltip" class="width-adjust">
+        <mat-card-title *ngIf="tooltip">
+            <p style="font-size: 9pt; color: black;padding:0;"> <b> {{ Model.Ticker }} </b> Updated
+                {{ Model.Date | date:'dd-MMM-yyyy HH:mm' }}</p>
+        </mat-card-title>
+        <div class="container" style="font-size: 9pt;" *ngIf="tooltip">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 text-left" style="white-space: nowrap;"
+                    *ngIf="!tooltip.TargetPricePrior&&!tooltip.EPSFY1Prior&&!tooltip.EPSFY2Prior"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-left" style="white-space: nowrap;"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right">New</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">Prior</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">Change</div>
+            </div>
+            <div class="row"
+                *ngIf="tooltip.RatingPrior || !tooltip.TargetPricePrior || !tooltip.EPSFY1Prior || !tooltip.EPSFY2Prior">
+                <div class="col-lg-6 col-md-6 col-sm-6 text-left"
+                    *ngIf="!tooltip.TargetPricePrior&&!tooltip.EPSFY1Prior&&!tooltip.EPSFY2Prior">Rating</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-left"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">Rating</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right">{{tooltip.Rating}}</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">{{tooltip.RatingPrior}}
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior"></div>
+            </div>
+            <div class="row" *ngIf="tooltip.TargetPricePrior!=0.0">
+                <div class="col-lg-6 col-md-6 col-sm-6 text-left" style="white-space: nowrap;"
+                    *ngIf="!tooltip.TargetPricePrior&&!tooltip.EPSFY1Prior&&!tooltip.EPSFY2Prior">Target Price
+                    ({{tooltip.PriceCurrency}})</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-left" style="white-space: nowrap;"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">Target Price
+                    ({{tooltip.PriceCurrency}})</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right">{{tooltip.TargetPrice}}</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">
+                    {{tooltip.TargetPricePrior}}</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">
+                    <span class="grArrow text-right"
+                        *ngIf="show(tooltip.TargetPrice,tooltip.TargetPricePrior)">{{tooltip.TargetPriceDelta}}</span>
+                    <span class="rdArrow text-right"
+                        *ngIf="show(tooltip.TargetPricePrior,tooltip.TargetPrice)">{{tooltip.TargetPriceDelta}}</span>
+                </div>
+            </div>
+            <div class="row" *ngIf="tooltip.EPSFY1Prior!=0.0">
+                <div class="col-lg-6 col-md-6 col-sm-6 text-left" style="white-space: nowrap;"
+                    *ngIf="!tooltip.TargetPricePrior&&!tooltip.EPSFY1Prior&&!tooltip.EPSFY2Prior">
+                    F{{tooltip.EPSFY1Label}}E ({{tooltip.EpsCurrency}})</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-left" style="white-space: nowrap;"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">F{{tooltip.EPSFY1Label}}E
+                    ({{tooltip.EpsCurrency}})</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right">{{tooltip.EPSFY1}}</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">{{tooltip.EPSFY1Prior}}
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">
+                    <span class="grArrow text-right"
+                        *ngIf="show(tooltip.EPSFY1,tooltip.EPSFY1Prior)">{{tooltip.EPSFY1Delta}}</span>
+                    <span class="rdArrow text-right"
+                        *ngIf="show(tooltip.EPSFY1Prior,tooltip.EPSFY1)">{{tooltip.EPSFY1Delta}}</span>
+                </div>
+            </div>
+            <div class="row" *ngIf="tooltip.EPSFY2Prior!=0.0">
+                <div class="col-lg-6 col-md-6 col-sm-6 text-left" style="white-space: nowrap;"
+                    *ngIf="!tooltip.TargetPricePrior&&!tooltip.EPSFY1Prior&&!tooltip.EPSFY2Prior">
+                    F{{tooltip.EPSFY2Label}}E ({{tooltip.EpsCurrency}})</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-left" style="white-space: nowrap;"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">F{{tooltip.EPSFY2Label}}E
+                    ({{tooltip.EpsCurrency}})</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right">{{tooltip.EPSFY2}}</div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">{{tooltip.EPSFY2Prior}}
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 text-right"
+                    *ngIf="tooltip.TargetPricePrior&&tooltip.EPSFY1Prior&&tooltip.EPSFY2Prior">
+                    <span class="grArrow text-right"
+                        *ngIf="show(tooltip.EPSFY2,tooltip.EPSFY2Prior)">{{tooltip.EPSFY2Delta}}</span>
+                    <span class="rdArrow text-right"
+                        *ngIf="show(tooltip.EPSFY2Prior,tooltip.EPSFY2)">{{tooltip.EPSFY2Delta}}</span>
+                </div>
+            </div>
+            <div class="row" style="padding-top:5px">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-left">
+                    See report <a style='cursor: pointer;border-bottom: 1px solid blue' (click)="openPub()" href="" title="{{Model.Title | urlDecode}}">
+                        {{ Model.Title.length >50  ? Model.Title.substr(0, 50) + "\u2026" : Model.Title | urlDecode}}</a>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</mde-popover>
+
+<div *ngIf="Model.ActionId && Model.ActionId == 1; else plainText">
+    <!-- <div class="tooltip-buttons" (mouseenter)="openToolTip()" (mouseleave)="closeToolTip()"
+        [mdePopoverTriggerFor]="appPopover">
+        <a style="cursor: pointer;border-bottom: 1px solid blue">{{Model.Action}}</a>
+    </div> -->
+    
+    <a style="cursor: pointer;border-bottom: 1px solid blue"  [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover" (mouseenter)='openToolTip()'>{{Model.Action}}</a>
+</div>
+<ng-template #plainText>
+    {{Model.Action}}
+</ng-template>
+

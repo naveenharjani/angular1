@@ -1,0 +1,39 @@
+
+
+<div  class= "typeahead" >
+<form style="margin-bottom: 1em;">
+  <mat-form-field class="autocomplete-box transition"  [@slideInOut]="inputExtend" appearance="outline">
+    <input  #autocompleteInput class="quickSearchMat" matInput (focus)="onFocus()" (focusout)="onFocusOut()" placeholder="Search"  (keydown)="onKeydown($event)" [matAutocomplete]="auto" [formControl]="searchCtrl">
+    <!-- <input matInput placeholder="Search"  [matAutocomplete]="auto" [formControl]="searchCtrl"> -->
+
+    <!-- <mat-icon style="color:black;" matSuffix>search</mat-icon> -->
+    <mat-autocomplete #auto="matAutocomplete" class="single-autocomplete" [panelWidth]="panelWidth"  (optionSelected)="onOptionSelected($event)" [displayWith]="displayFn">
+        <mat-optgroup class="group-label" *ngFor="let group of searchResults$ | async; index as ig">
+        <ng-container *ngFor="let result of group.Results;  index as i" >
+          <mat-option *ngIf=" !(!showContent && result.ContentOrd > 1) " (mouseenter)="previewOption(result)" (focus)="optionFocus()" class="autocomplete-option " [value]="result">
+          <div *ngIf="group.Group != 'Keyword'">
+            <div *ngIf = "result.HeadOrd != 1 && result.ActiveFlag == 1">
+              <span style="font-size:14px; font-family: Klavika-Regular;"><div innerHtml="{{result.Display | highlight : searchText }}"></div></span> 
+          </div>
+          <div *ngIf = "result.ActiveFlag == 0 && group.Group !='Analyst'">
+              <span style="font-size:14px; font-family: Klavika-Regular; color:gray;"><div innerHtml="{{result.Display | highlight : searchText }}"></div></span>
+              <span style="font-size:12px; font-family: Klavika-Regular; padding-left:15px; color:gray" *ngIf="i == 0" >in Research</span>
+          </div>
+          <div *ngIf="showContent && result.SectionOrd ==1 && result.HeadOrd <= 2 && result.ActiveFlag == 1">
+              <span style="padding-left:25px; font-family: Klavika-Regular; font-size:12px;"> in {{result.Content}}</span>
+          </div>
+          </div>
+          <div *ngIf="group.Group == 'Keyword' && textSearchEnabled">
+            <span style="font-size:14px; font-family: Klavika-Regular;">{{result.Display}}</span>
+          </div>
+          </mat-option>
+      </ng-container>
+        <hr *ngIf="ig != 0" class="divider" >
+      </mat-optgroup>
+    </mat-autocomplete>
+  </mat-form-field>
+  </form>
+
+
+
+</div>
