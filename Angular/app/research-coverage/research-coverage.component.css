@@ -1,0 +1,4 @@
+:host ::ng-deep .rightAlignIssueFix .ag-cell-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}

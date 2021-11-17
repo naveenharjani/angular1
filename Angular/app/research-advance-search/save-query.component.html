@@ -1,0 +1,16 @@
+<div><h2 mat-dialog-title>Save Search</h2></div>
+<!-- <mat-dialog-content> -->
+        <mat-form-field> 
+                <mat-label>Name</mat-label>
+                <input style="height: 30px;" maxlength="30" matInput placeholder="Name" [(ngModel)]="queryName" (keydown.space)="Validate($event)" (keydown.enter)="closeDialog()">   
+        </mat-form-field>
+<!--          
+</mat-dialog-content> -->
+<mat-dialog-actions>        
+        <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+<div style="text-align:center;">
+<button style="margin-left: 20px;" class="btn" mat-stroked-button  [disabled]="queryName.length == 0"  (click)="closeDialog()">Save</button>
+<button style="margin-left: 20px;;"  mat-stroked-button mat-dialog-close>Cancel</button>
+</div>
+
+</mat-dialog-actions>

@@ -1,0 +1,404 @@
+<app-beehive-page-header [beehivePageName]='gridName' [buttonList]='buttonList' 
+(onButtonClick)='onButtonClick($event)'>    
+</app-beehive-page-header> 
+<div class="container-fluid">
+<div class="labelShowResults" *ngIf="showRecordCount"> {{SearchRecordCount | number}}  Results  
+<button class="researchButton" mat-stroked-button autofocus style="color: black;" (click)="searchResult()">Show Results</button>
+<button class="researchButton" mat-stroked-button style="color: black;" (click)="clearFilter()">Clear Filters</button>
+</div>
+</div>
+<div class="container-fluid" >
+<div class="row">
+ 
+<div class="col-md">	
+  <div class="dropdownName">	
+  <span> Analysts</span>	
+  <div style="float:right">
+   <input class="multiInput" type="checkbox" id="isActiveAnalysts" name="Active" checked  (change)="LoadAnalysts($event)" > <span> Active</span>        
+ </div>
+  </div>	
+  <div>	
+  <ng-select [multiple]="true" [items]="Analysts" [(ngModel)]="selectedAnalysts" placeholder="All" bindLabel="Display"	virtualScroll="true" 
+   
+
+  [closeOnSelect]="false" (change)="onChange('Analysts',$event)">	
+  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+        <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+            <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+        </div>     	
+    </ng-template>	
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+    <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> 
+    <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>
+    </ng-template>	
+</ng-select>	
+</div>	
+</div>	
+<div class="col-md">
+  <div class="dropdownName">
+    <span> Tickers</span>
+    <div style="float:right">
+      <input class="multiInput" type="checkbox" id="isActive" name="Active" checked  (change)="LoadTicker($event)" > <span> Active</span>        
+    </div>
+    </div>
+    <ng-select [multiple]="true" [items]="Tickers" [(ngModel)]="selectedTickers" placeholder="All" bindLabel="Display" virtualScroll="true"	
+     
+    [closeOnSelect]="false" (change)="onChange('Tickers',$event)" >	
+     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+           <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+               <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+           </div>     	
+       </ng-template>	
+     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+       <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> 
+       <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>
+       </ng-template>	
+   </ng-select>	
+   </div>	
+   <div class="col-md">	
+     <div class="dropdownName">	
+       <span> Industries</span>	
+       <div style="float:right">
+        <input class="multiInput" type="checkbox" id="isActiveIndustries" name="Active" checked  (change)="LoadIndustries($event)" > <span> Active</span>        
+      </div>
+       </div>	
+     <ng-select  [multiple]="true" [items]="Industries" [(ngModel)]="selectedIndustries" placeholder="All" bindLabel="Display"	virtualScroll="true"  
+     [closeOnSelect]="false" (change)="onChange('Industry',$event)">	
+      
+     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+           <div class="ng-value" *ngFor="let item of items | slice:0:1">	           
+               <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+           </div>     	
+      </ng-template>	
+     
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+        <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> 
+        <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>	
+       </ng-template>
+       <ng-template #tipContent>
+        {{item.Display}}
+      </ng-template>	
+   </ng-select>	
+   </div>	
+   <div class="col-md">	
+    <div class="dropdownName">	
+     <span> Types</span>	       
+     </div>	
+   <div>	
+   <ng-select [multiple]="true" [items]="Type" [(ngModel)]="selectedType" placeholder="All" bindLabel="Display" virtualScroll="true"
+   [closeOnSelect]="false" (change)="onChange('Type',$event)">	
+   <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+         <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+             <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+         </div>     	
+     </ng-template>	
+   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+     <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>  
+     <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>		
+     </ng-template>	       
+ </ng-select>	
+</div>	
+   </div>	
+   <div class="col-md">
+    <div class="dropdownName">
+      <span> Text</span>
+    </div>
+    <div>  
+    <div class="form-group fg--search">
+      <input type="text" class="textbox" [(ngModel)]="selectedSearchText" placeholder="Search" (keydown.enter)="onChange('Text',$event)">       
+      <button type="submit"  (click)="onChange('Text',$event)">  <mat-icon>search </mat-icon></button>
+    </div>
+   </div>
+  </div>
+   
+   <div class="col-md">	
+     <div>	
+       &nbsp;	
+     </div>	
+     <div style="vertical-align: middle;">	
+         
+       <button (click)="toggle()" id="bt" class="mat-stroked-button" >  
+         <span *ngIf="!show">More</span> 
+         <span *ngIf="show">Less</span> 
+     </button>  	
+    
+     </div>	
+       
+   </div>	
+   <div class="col-md">	  
+  </div>
+ 
+ </div>	
+      
+<div *ngIf="show" class="row" style="margin-bottom: 10px;">	 
+ <div class="col-md">	
+   <div class="dropdownName">	  
+   <span> Focus</span>	
+   </div>	
+   <div>	
+   <ng-select [multiple]="true" [items]="SubType" [(ngModel)]="selectedSubType" placeholder="All" bindLabel="Display"	virtualScroll="true" 
+   [closeOnSelect]="false" (change)="onChange('SubType',$event)">	
+   <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+         <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+             <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+         </div>     	
+     </ng-template>	
+   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+     <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.Display}}	
+     </ng-template>	
+ </ng-select>	
+</div>	
+</div>	
+<div class="col-md">	
+  <div class="dropdownName">	
+  <span>Actions</span>	
+  </div>	
+  <div>	
+    <ng-select [multiple]="true" [items]="ActionList" [(ngModel)]="selectedAction" [dropdownPosition]="'bottom'" placeholder="All"
+    bindLabel="Display"    groupBy="Category"    [selectableGroup]="false"
+    [selectableGroupAsModel]="false"    [closeOnSelect]="false"    
+      (change)="onChange('Action',$event)">
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+      <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+          <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+      </div>     	
+  </ng-template>	
+    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+       <span  class="not-active" id="item-{{index}}">  {{item.Category | uppercase}}</span> 
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.Display}}
+    </ng-template>
+</ng-select>
+
+  </div>	
+  </div>	
+<div class="col-md">	
+  <div class="dropdownName">	
+    <span> Keywords</span>	     
+    </div>	
+ <div>	
+ <ng-select [multiple]="true" [items]="Keyword" [(ngModel)]="selectedKeyword" placeholder="All" bindLabel="Display"	virtualScroll="true"
+  [closeOnSelect]="false" (change)="onChange('Keyword',$event)">	
+ <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+       <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+           <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+       </div>     	
+   </ng-template>	
+ <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+   <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> 
+   <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>		
+   </ng-template>	
+</ng-select>	
+</div>	
+</div>	
+<div class="col-md">	 
+ <div class="dropdownName">	
+  <span> Investor Themes</span>
+  </div>	
+ <div>	
+ <ng-select [multiple]="true" [items]="Investorthemes" [(ngModel)]="selectedInvestorthemes" placeholder="All" bindLabel="Display"	virtualScroll="true" 
+  [closeOnSelect]="false" (change)="onChange('InvestorTheme',$event)">	
+ <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+       <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+           <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+       </div>     	
+   </ng-template>	
+ <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+   <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> 
+   <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>	
+   </ng-template>	
+</ng-select>	
+</div>	
+</div>	
+<div class="col-md">	
+ <div class="dropdownName">	
+ <span> Themactic Tags</span>	
+ </div>	
+ <div>	
+ <ng-select [multiple]="true" [items]="Thematictag" [(ngModel)]="selectedThematictag" placeholder="All" bindLabel="Display"	virtualScroll="true" 
+  [closeOnSelect]="false" (change)="onChange('ThematicTag',$event)">	
+ <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+       <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+           <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+       </div>     	
+   </ng-template>	
+ <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+   <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.Display}}	
+   </ng-template>	
+</ng-select>	
+</div>	
+</div>	
+<div class="col-md">	  
+</div>	
+<div class="col-md">	  
+</div>	
+
+</div>  	
+<div *ngIf="show" class="row">	
+  <div class="col-md">	
+    <div class="dropdownName">	
+     <span> Authors</span>	       
+     </div>	
+   <div>	
+   <ng-select [multiple]="true" [items]="Authors" [(ngModel)]="selectedAuthors" [dropdownPosition]="'bottom'"  placeholder="All" bindLabel="Display" virtualScroll="true"
+   [closeOnSelect]="false" (change)="onChange('Authors',$event)">	
+   <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">	
+         <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+             <span class="ng-value-label">{{items.length}} item(s) selected</span>          	
+         </div>     	
+     </ng-template>	
+   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">	
+     <input class="multiInput" id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>  
+     <span [style.color]="item.Active == '0' ? 'grey' : 'black'">{{item.Display}} </span>		
+     </ng-template>	       
+ </ng-select>	
+</div>	
+</div>	
+<div class="col-md">
+  <div class="dropdownName">
+    <span> PubNo</span>
+  </div>
+  <div>  
+  <div class="form-group fg--search"> 
+    <input  type="text" class="textbox" [(ngModel)]="PubNo" placeholder="PubNo" (keydown.enter)="onChange('PubNo',$event)">       
+    <button type="submit"  (click)="onChange('PubNo',$event)">  <mat-icon>search </mat-icon></button>
+  </div>
+ </div>
+</div>
+
+  <div class="col-md">	
+    <div class="dropdownName">	
+    <span> Since</span>	 	
+    </div>	     
+    <div style="min-width:187px;display:flex; border: 1px solid #ccc; height: 36px; padding-left: 6px;"> 
+      <input #sinceInput matInput [matDatepicker]="DatePickerSince" [max]="maxDate" placeholder="Since" autocomplete="off" class="form-control"
+      (dateChange)="onChange('Since', $event)">
+    <mat-datepicker-toggle matSuffix [for]="DatePickerSince"></mat-datepicker-toggle>
+    <mat-datepicker #DatePickerSince></mat-datepicker>
+    </div>       
+  </div>
+  <div class="col-md" >	
+     <div class="dropdownName">	
+      <span> Until</span>	
+      </div>	
+      <div style="min-width:187px; display:flex; border: 1px solid #ccc; height: 36px; padding-left: 6px;">        
+        <input #untilInput matInput [matDatepicker]="DatePickerUntil" [max]="maxDate" placeholder="Until" autocomplete="off" class="form-control"    
+        (click)="clickdate()"  (dateChange)="onChange('Until', $event)">
+        <mat-datepicker-toggle   matSuffix [for]="DatePickerUntil"></mat-datepicker-toggle>
+        <mat-datepicker #DatePickerUntil></mat-datepicker>      
+      </div>
+       
+  </div> 
+<div class="col-md">	
+   <div class="dropdownName">	
+    <span> Saved Searches</span>	
+    </div>	
+    <div>	
+      <ng-select  [items]="savedQueries" [(ngModel)]="selectedQuery" [dropdownPosition]="'bottom'"  placeholder="Select" bindLabel="Name"	virtualScroll="true" 
+      [closeOnSelect]="true" (change)="LoadSearchPortfolio($event)">	
+     <ng-template ng-multi-label-tmp let-items="items">	
+           <div class="ng-value" *ngFor="let item of items | slice:0:1">	
+               <span class="ng-value-label">{{item.Name}}  </span>          	
+           </div>     	
+       </ng-template>	
+     
+       <ng-template ng-option-tmp let-item="item">
+        <span  style="float: left; ">    {{item.Name.length > 20 ? (item.Name| slice:0:20) + '..' : item.Name}}  </span>
+      <span matTooltip="Delete" style="float: right; color: red;" (click)="DeleteSaveQuery(item)"  ><img src="\Images\delete_icon.png"></span>         
+     </ng-template>
+    </ng-select>
+   </div>    
+</div>
+<div class="col-md">	  
+</div>	
+<div class="col-md">	  
+</div>
+ 
+
+</div>  	
+<br>	
+ <div class="chipHolder">   	
+   <mat-chip-list>
+    <mat-chip *ngIf="DefaultFilterValue" matTooltip="Recent Search" selected="true" [selectable]="true">	
+    {{DefaultFilterValue}}
+  </mat-chip> 		
+      <mat-chip *ngIf="SearchedTextValue" matTooltip="Text" selected="true" [selectable]="true"	
+     [removable]="true" (removed)="removeFilterChip(value, 'Text')">	
+     {{SearchedTextValue}}	
+     <mat-icon matChipRemove>cancel</mat-icon>	
+   </mat-chip> 
+ <mat-chip   *ngIf="since "selected="true" [selectable]="true"	matTooltip="Since"	
+ [removable]="true" (removed)="removeFilterChip(since, 'Since')">		
+  {{since}}		 
+ <mat-icon matChipRemove>cancel</mat-icon>		
+</mat-chip> 
+<mat-chip *ngIf="until" selected="true" [selectable]="true" matTooltip="Until"		
+[removable]="true" (removed)="removeFilterChip(until, 'Until')">		
+{{until}}  
+<mat-icon matChipRemove>cancel</mat-icon>		
+</mat-chip> 
+   <mat-chip *ngFor="let value of selectedTickers" selected="true" [selectable]="true" matTooltip="Ticker"	
+     [removable]="true" (removed)="removeFilterChip(value, 'Tickers')">	
+     {{value?.Display}}	
+     <mat-icon matChipRemove>cancel</mat-icon>	
+   </mat-chip>	
+   <mat-chip *ngFor="let value of selectedIndustries" selected="true" [selectable]="true" matTooltip="Industry"	
+     [removable]="true" (removed)="removeFilterChip(value, 'Industries')">	
+     {{value?.Display}}	
+     <mat-icon matChipRemove>cancel</mat-icon>	
+   </mat-chip>	
+   <mat-chip *ngFor="let value of selectedAnalysts" selected="true" [selectable]="true" matTooltip="Analyst"	
+     [removable]="true" (removed)="removeFilterChip(value, 'Analysts')">	
+     {{value?.Display}}	
+     <mat-icon matChipRemove>cancel</mat-icon>	
+   </mat-chip>	
+   <mat-chip *ngFor="let value of selectedType" selected="true" [selectable]="true" matTooltip="Type"	
+   [removable]="true" (removed)="removeFilterChip(value, 'Type')">	
+   {{value?.Display}}	
+   <mat-icon matChipRemove>cancel</mat-icon>	
+   </mat-chip>	
+   <mat-chip *ngFor="let value of selectedSubType" selected="true" [selectable]="true" matTooltip="Sub Type"	
+   [removable]="true" (removed)="removeFilterChip(value, 'SubType')">	
+   {{value?.Display}}	
+   <mat-icon matChipRemove>cancel</mat-icon>	
+ </mat-chip>	
+   <mat-chip *ngFor="let value of selectedKeyword" selected="true" [selectable]="true" matTooltip="Keyword"	
+   [removable]="true" (removed)="removeFilterChip(value, 'Keyword')">	
+   {{value?.Display}}	
+   <mat-icon matChipRemove>cancel</mat-icon>	
+ </mat-chip>	
+   <mat-chip *ngFor="let value of selectedInvestorthemes" selected="true" [selectable]="true" matTooltip="Investor Theme"	
+   [removable]="true" (removed)="removeFilterChip(value, 'Investorthemes')">	
+   {{value?.Display}}	
+   <mat-icon matChipRemove>cancel</mat-icon>	
+ </mat-chip>	
+   <mat-chip *ngFor="let value of selectedThematictag" selected="true" [selectable]="true" matTooltip="Thematic Tag"	
+   [removable]="true" (removed)="removeFilterChip(value, 'Thematictag')">	
+   {{value?.Display}}	
+   <mat-icon matChipRemove>cancel</mat-icon>	
+ </mat-chip>	  
+ <mat-chip *ngFor="let value of selectedAction" selected="true" [selectable]="true" matTooltip="Action"	
+ [removable]="true" (removed)="removeFilterChip(value, 'Action')">	
+ {{value?.Display}}	
+ <mat-icon matChipRemove>cancel</mat-icon>	
+</mat-chip>
+<mat-chip *ngFor="let value of selectedAuthors" selected="true" [selectable]="true" matTooltip="Author"	
+[removable]="true" (removed)="removeFilterChip(value, 'Authors')">	
+{{value?.Display}}	
+<mat-icon matChipRemove>cancel</mat-icon>	
+</mat-chip> 
+<mat-chip *ngIf="selectedPubNo" selected="true" [selectable]="true"	matTooltip="PubNo"
+[removable]="true" (removed)="removeFilterChip(value, 'PubNo')">	
+{{selectedPubNo}}	
+<mat-icon matChipRemove>cancel</mat-icon>	
+</mat-chip> 	
+ </mat-chip-list>     	
+</div>	
+
+</div>	
+<div>	
+ <app-ab-grid [rowData]='SearchrowData' [columnDefs]='columnDefs' [style]='style' [pageSize]='pageSize'	
+ [gridOptions]='gridOptions' (getDataSource)='getDataSource($event)' (onRowSelect)="onRowSelected($event)">	
+</app-ab-grid>	
+</div>
