@@ -1,0 +1,10 @@
+<app-beehive-page-header [beehivePageName]='gridName' [buttonList]='buttonList' (onButtonClick)='onButtonClick($event)'>
+</app-beehive-page-header>
+
+<app-ab-grid [rowData]='rowData' [columnDefs]='columnDefs' [style]='style' [pageSize]='pageSize'
+   [gridOptions]='gridOptions' (getDataSource)='getDataSource($event)'>
+</app-ab-grid>
+
+<div class="spinner" *ngIf='dataLoading'>
+   <mat-spinner [diameter]='50'></mat-spinner>
+</div>

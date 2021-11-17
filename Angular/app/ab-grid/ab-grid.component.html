@@ -1,0 +1,9 @@
+<div style="padding: 0% 1%;">
+    <div style="margin: 6px 0px;" [ngStyle]="{'height': style?.height, 'width': style?.width}" id="myGrid">
+        <ag-grid-angular style="width: 100%; height: 100%;" [ngClass]='style?.theme' [rowData]="rowData"
+            [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" (rowSelected)="onRowSelected($event)"
+            [gridOptions]='gridApiOptions' [paginationPageSize]=paginationPageSize [enableCellTextSelection]="true"
+            [modules]='modules' [frameworkComponents]='frameworkComponents'>
+        </ag-grid-angular>
+    </div>
+</div>

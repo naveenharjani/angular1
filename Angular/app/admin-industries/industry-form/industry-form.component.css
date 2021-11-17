@@ -1,0 +1,12 @@
+.row-group{  
+  display: flex;
+  align-items: center;
+}
+
+.row-group-element{
+    width: 50% !important;
+}
+  
+body {
+  line-height: unset;
+}
